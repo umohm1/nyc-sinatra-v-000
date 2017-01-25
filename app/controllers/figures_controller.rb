@@ -36,14 +36,19 @@ class FiguresController < ApplicationController
       erb :'figures/edit'
     end
 
-     post '/figures/:id' do
+     patch '/figures/:id' do
+      #  binding.pry
       @figure = Figure.find_by_id(params[:id])
-      @figure.name = params[:figure][:name]
-      @figure.landmarks = []
-      @figure.titles = []
-      @figure.titles.push((Title.find_or_create_by(id: params[:figure][:title_ids])), (Title.find_or_create_by(name: params[:figure][:title])))
-      @figure.landmarks.push((Landmark.find_or_create_by(id: params[:figure][:landmark_ids])), (Landmark.find_or_create_by(name: params[:figure][:landmark])))
+      # @figure.name = params[:figure][:name]
+      # binding.pry
+      @figure.update(params[:figure])
+
+      @figure.titles << Title.find_or_create_by(name: params[:title][:name])
+      @figure.landmarks << Landmark.find_or_create_by(name: params[:landmark][:name])
+
+      #@figure.titles.push((Title.find_or_create_by(id: params[:figure][:title_ids])), (Title.find_or_create_by(name: params[:figure][:title])))
+      #@figure.landmarks.push((Landmark.find_or_create_by(id: params[:figure][:landmark_ids])), (Landmark.find_or_create_by(name: params[:figure][:landmark])))
       @figure.save
       redirect to "/figures/#{@figure.id}"
     end
-  end 
+  end
