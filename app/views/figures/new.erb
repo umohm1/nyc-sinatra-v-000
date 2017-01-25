@@ -12,11 +12,11 @@
 
     <p>Choose New Title</p>
 
-    <label>New Title: </label>
+    <label>New Title:</label>
 	<input id="new_title" type="text" name="title[name]"><br><br>
 
 
-  <label>Landmarks: </label>
+  <label>Landmarks:</label>
   <% Landmark.all.uniq.each do |landmark| %>
     <%= landmark.name %>
   <input id="landmark_<%= landmark.id %>" type="checkbox" name="figure[landmark_ids][]" value="<%= landmark.id %>">
